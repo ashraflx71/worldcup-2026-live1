@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ترتيب المجموعات - كأس العالم 2026</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* إضافات خاصة بصفحة المجموعات */
+        .groups-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 2rem 4rem 2rem;
+        }
+        
+        .groups-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff, #00d2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .group-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .group-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .group-header {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            margin-bottom: 1rem;
+        }
+        
+        .group-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .group-table th, .group-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .group-table th {
+            color: #00d2ff;
+            font-weight: bold;
+        }
+        
+        body.light .group-card {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        body.light .group-table th {
+            color: #0066aa;
+        }
+        
+        @media (max-width: 768px) {
+            .groups-container { padding: 100px 1rem 2rem 1rem; }
+            .group-header { font-size: 1.3rem; }
+            .group-table th, .group-table td { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <div class="logo">🏆 كأس العالم 2026</div>
+            <div class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="matches.html">المباريات</a>
+                <a href="groups.html" class="active">المجموعات</a>
+                <a href="teams.html">المنتخبات</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <div class="groups-container">
+        <h1 class="groups-title">🏆 ترتيب المجموعات</h1>
+        
+        <div class="groups-grid" id="groupsGrid">
+            <!-- سيتم إضافة المجموعات عبر JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // بيانات ترتيب المجموعات
+        const allGroups = {
+            "A": [
+                { name: "🇧🇷 البرازيل", played: 2, won: 1, drawn: 1, lost: 0, goals: 5, against: 3, points: 4 },
+                { name: "🇦🇷 الأرجنتين", played: 2, won: 1, drawn: 1, lost: 0, goals: 4, against: 2, points: 4 },
+                { name: "🇺🇸 الولايات المتحدة", played: 1, won: 0, drawn: 0, lost: 1, goals: 0, against: 2, points: 0 },
+                { name: "🇨🇦 كندا", played: 1, won: 0, drawn: 0, lost: 1, goals: 0, against: 2, points: 0 }
+            ],
+            "B": [
+                { name: "🇫🇷 فرنسا", played: 2, won: 2, drawn: 0, lost: 0, goals: 7, against: 1, points: 6 },
+                { name: "🇩🇪 ألمانيا", played: 2, won: 1, drawn: 0, lost: 1, goals: 3, against: 2, points: 3 },
+                { name: "🇲🇽 المكسيك", played: 1, won: 0, drawn: 0, lost: 1, goals: 0, against: 3, points: 0 },
+                { name: "🇪🇸 إسبانيا", played: 1, won: 0, drawn: 0, lost: 1, goals: 0, against: 4, points: 0 }
+            ]
+        };
+
+        function renderGroups() {
+            const container = document.getElementById('groupsGrid');
+            if (!container) return;
+            
+            container.innerHTML = Object.keys(allGroups).map(group => `
+                <div class="group-card">
+                    <div class="group-header">المجموعة ${group}</div>
+                    <table class="group-table">
+                        <thead>
+                            <tr><th>المنتخب</th><th>لعب</th><th>فوز</th><th>تعادل</th><th>خسارة</th><th>له</th><th>عليه</th><th>نقاط</th></tr>
+                        </thead>
+                        <tbody>
+                            ${allGroups[group].map(team => `
+                                <tr>
+                                    <td>${team.name}</td>
+                                    <td>${team.played}</td>
+                                    <td>${team.won}</td>
+                                    <td>${team.drawn}</td>
+                                    <td>${team.lost}</td>
+                                    <td>${team.goals}</td>
+                                    <td>${team.against}</td>
+                                    <td><strong>${team.points}</strong></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `).join('');
+        }
+
+        // تبديل الوضع الليلي
+        document.getElementById('themeToggle')?.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const toggle = document.getElementById('themeToggle');
+            toggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+        });
+
+        renderGroups();
+    </script>
+</body>
+</html>
