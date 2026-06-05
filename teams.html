@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 المنتخبات المشاركة - كأس العالم 2026</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .teams-hero {
+            text-align: center;
+            padding: 120px 20px 40px;
+            background: linear-gradient(135deg, #0a0f1e, #0a1a2f);
+        }
+        body.light .teams-hero {
+            background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
+        }
+        .teams-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.8rem;
+            max-width: 1300px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+        .team-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        .team-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255,255,255,0.12);
+            border-color: #ffd966;
+        }
+        .team-flag {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .team-group {
+            background: rgba(0,210,255,0.2);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+        .team-continent {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-top: 8px;
+        }
+        body.light .team-continent {
+            color: #555;
+        }
+        @media (max-width: 700px) {
+            .teams-hero h1 { font-size: 1.8rem; }
+            .team-name { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <div class="logo">🏆 كأس العالم 2026</div>
+            <div class="nav-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="groups.html">المجموعات</a>
+                <a href="teams.html" class="active">المنتخبات</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <div class="teams-hero">
+        <h1>⚽ المنتخبات المشاركة</h1>
+        <p>48 منتخباً يتنافسون على كأس العالم 2026</p>
+    </div>
+
+    <div class="teams-grid" id="teamsContainer"></div>
+
+    <script>
+        // قائمة المنتخبات مع أعلامها ومجموعاتها
+        const teamsList = [
+            { name: "البرازيل", flag: "🇧🇷", group: "A", continent: "أمريكا الجنوبية" },
+            { name: "الأرجنتين", flag: "🇦🇷", group: "A", continent: "أمريكا الجنوبية" },
+            { name: "الولايات المتحدة", flag: "🇺🇸", group: "A", continent: "أمريكا الشمالية" },
+            { name: "كندا", flag: "🇨🇦", group: "A", continent: "أمريكا الشمالية" },
+            { name: "فرنسا", flag: "🇫🇷", group: "B", continent: "أوروبا" },
+            { name: "ألمانيا", flag: "🇩🇪", group: "B", continent: "أوروبا" },
+            { name: "المكسيك", flag: "🇲🇽", group: "B", continent: "أمريكا الشمالية" },
+            { name: "إسبانيا", flag: "🇪🇸", group: "B", continent: "أوروبا" },
+            { name: "إنجلترا", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", group: "C", continent: "أوروبا" },
+            { name: "المغرب", flag: "🇲🇦", group: "D", continent: "أفريقيا" },
+            { name: "مصر", flag: "🇪🇬", group: "D", continent: "أفريقيا" },
+            { name: "البرتغال", flag: "🇵🇹", group: "E", continent: "أوروبا" },
+            { name: "هولندا", flag: "🇳🇱", group: "E", continent: "أوروبا" },
+            { name: "إيطاليا", flag: "🇮🇹", group: "F", continent: "أوروبا" },
+            { name: "بلجيكا", flag: "🇧🇪", group: "F", continent: "أوروبا" }
+        ];
+
+        function renderTeams() {
+            const container = document.getElementById("teamsContainer");
+            if (!container) return;
+            let html = "";
+            teamsList.forEach(team => {
+                html += `
+                    <div class="team-card">
+                        <div class="team-flag">${team.flag}</div>
+                        <div class="team-name">${team.name}</div>
+                        <div class="team-group">المجموعة ${team.group}</div>
+                        <div class="team-continent">🌍 ${team.continent}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // تبديل الوضع الليلي
+        const toggleBtn = document.getElementById("themeToggle");
+        if (toggleBtn) {
+            toggleBtn.addEventListener("click", () => {
+                document.body.classList.toggle("light");
+                toggleBtn.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
+            });
+        }
+        renderTeams();
+    </script>
+</body>
+</html>
